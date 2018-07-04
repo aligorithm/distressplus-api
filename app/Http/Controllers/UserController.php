@@ -46,4 +46,31 @@ class UserController extends Controller
         }
         return response()->json(['status'=>true,'user'=> $user,'token'=> "Bearer ".$token]);
     }
+    public function trust(Request $request){
+        $this->validate($request,[
+            'email'=>'email|required'
+        ]);
+        if (User::all()->where('email','=',$request->get('email'))->count() > 0) {
+            $trustee = User::all()->where('email','=',$request->get('email'))->first();
+            $request->user()->trusted_contacts()->attach($trustee->id);
+        } else{
+            return response()->json(['status'=>false,'message'=>'Sorry, the email sent is not registered on DistressPlus']);
+        }
+        return response()->json(['status'=>true,'message'=>'User trusted']);
+    }
+    public function untrust(Request $request){
+        $this->validate($request,[
+            'email'=>'email|required'
+        ]);
+        if (User::all()->where('email','=',$request->get('email'))->count() > 0) {
+            $trustee = User::all()->where('email','=',$request->get('email'))->first();
+            $request->user()->trusted_contacts()->detach($trustee->id);
+        } else{
+            return response()->json(['status'=>false,'message'=>'Sorry, the email sent is not registered on DistressPlus']);
+        }
+        return response()->json(['status'=>true,'message'=>'User untrusted']);
+    }
+    public function trustedlist(Request $request){
+        return response()->json($request->user()->trusted_contacts()->get());
+    }
 }
