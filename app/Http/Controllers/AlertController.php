@@ -11,7 +11,8 @@ class AlertController extends Controller
     public function send(Request $request){
         $this->validate($request,[
            'user_id' => 'integer|required',
-            'coord' => 'string|required'
+            'lat' => 'double|required',
+            'longitude' => 'double|required'
         ]);
         $alert = Alert::create();
         $alert->user_id = $request->get('user_id');
