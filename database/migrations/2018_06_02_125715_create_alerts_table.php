@@ -15,7 +15,6 @@ class CreateAlertsTable extends Migration
     {
         Schema::create('alerts', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
             $table->integer('sender_id');
             $table->double('latitude');
             $table->double('longitude');

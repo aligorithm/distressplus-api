@@ -28,5 +28,6 @@ Route::prefix('v1')->group(function (){
     });
     Route::prefix('alert')->group(function (){
         Route::post('','AlertController@send')->middleware('auth:api');
+        Route::get('','AlertController@fetch')->middleware('auth:api');
     });
 });
