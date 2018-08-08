@@ -27,7 +27,7 @@ class UserController extends Controller
             'password' => Hash::make($request['password']),
         ]);
         $token = $user->createToken($user->name)->accessToken;
-        return response()->json(['status'=>true,'user'=>"Bearer ".$token])->setStatusCode(201,"Resource Created");
+        return response()->json(['status'=>true,'user'=>$user,'token'=> "Bearer " . $token])->setStatusCode(201,"Resource Created");
     }
     public function login(Request $request){
         $this->validate($request,[
