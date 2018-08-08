@@ -17,7 +17,8 @@ class CreateAlertsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('sender_id');
-            $table->string('coord');
+            $table->double('lat');
+            $table->double('long');
             $table->timestamps();
         });
     }
