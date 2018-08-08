@@ -11,10 +11,14 @@ class AlertController extends Controller
 {
     public function send(Request $request){
         $this->validate($request,[
-            'lat' => 'double|required',
+            'name' => 'string|required',
+            'phone' => 'string|required',
+            'latitude' => 'double|required',
             'longitude' => 'double|required'
         ]);
         $alert = Alert::create();
+        $alert->name = $request->get('name');
+        $alert->phone = $request->get('phone');
         $alert->sender_id =$request->user()->id;
         $alert->coord = $request->get('coord');
         $alert->save();
