@@ -23,9 +23,9 @@ class AlertController extends Controller
         $alert->longitude = $request->get('longitude');
         $alert->sender_id =$request->user()->id;
         $alert->save();
-        foreach ($request->user()->trusted_contacts() as $trusted_contact){
-            $trusted_contact->alerts()->associate($alert);
-            $trusted_contact->save();
+        foreach ($request->user()->trusted_contacts()->get() as $trusted_contact){
+            $alert->receivers()->attach($trusted_contact->id);
+            
             OneSignalFacade::sendNotificationToUser($request->user()->name." has sent a Distress Signal!", $trusted_contact->player, $url = null, $data = null, $buttons = null, $schedule = null);
         }
         return response()->json(["status"=>true,"message"=>"Successfully sent Alert"])->setStatusCode(201);
