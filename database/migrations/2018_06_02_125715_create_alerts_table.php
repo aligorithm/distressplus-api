@@ -18,8 +18,8 @@ class CreateAlertsTable extends Migration
             $table->integer('sender_id');
             $table->string('name');
             $table->string('phone');
-            $table->double('latitude');
-            $table->double('longitude');
+            $table->string('latitude');
+            $table->string('longitude');
             $table->timestamps();
         });
     }

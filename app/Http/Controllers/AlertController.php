@@ -13,8 +13,8 @@ class AlertController extends Controller
         $this->validate($request,[
             'name' => 'string|required',
             'phone' => 'string|required',
-            'latitude' => 'double|required',
-            'longitude' => 'double|required'
+            'latitude' => 'string|required',
+            'longitude' => 'string|required'
         ]);
         $alert = Alert::create();
         $alert->name = $request->get('name');
