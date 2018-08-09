@@ -29,7 +29,7 @@ class User extends Authenticatable
     ];
 
     public function alerts(){
-        return $this->hasMany(Alert::class);
+        return $this->hasMany(Alert::class,'sender_id');
     }
 
     public function panics(){
