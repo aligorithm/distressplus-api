@@ -19,6 +19,7 @@ class UserController extends Controller
         if (User::all()->where('email','=',\request('email'))->count() > 0) {
             return response()->json(['status'=>false,'message'=>'This email is already registered on DistressPlus']);
         }
+
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
