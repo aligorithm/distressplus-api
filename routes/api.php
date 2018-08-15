@@ -25,6 +25,7 @@ Route::prefix('v1')->group(function (){
         Route::post('trust','UserController@trust')->middleware('auth:api');
         Route::post('untrust','UserController@untrust')->middleware('auth:api');
         Route::get('trust','UserController@trustedlist')->middleware('auth:api');
+        Route::post('update','UserController@update')->middleware('auth:api');
     });
     Route::prefix('alert')->group(function (){
         Route::post('','AlertController@send')->middleware('auth:api');

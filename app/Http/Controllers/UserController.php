@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use function MongoDB\BSON\fromJSON;
 
 class UserController extends Controller
 {
@@ -25,7 +26,7 @@ class UserController extends Controller
             'email' => $request['email'],
             'phone' => $request['phone'],
             'player' => $request['player'],
-            'password' => Hash::make($request['password']),
+            'password' => Hash::make($request['password'])
         ]);
         $token = $user->createToken($user->name)->accessToken;
         return response()->json(['status'=>true,'user'=>$user,'token'=> "Bearer " . $token])->setStatusCode(201,"Resource Created");
@@ -74,4 +75,18 @@ class UserController extends Controller
     public function trustedlist(Request $request){
         return response()->json($request->user()->trusted_contacts()->get());
     }
+
+    public function update(Request $request){
+        $this->validate($request,[
+            'name'=>'string|required',
+            'email'=>'email|required',
+            'phone'=>'string|required',
+        ]);
+        $user = $request->user();
+        $user->update(['name'=>$request->get('name'),
+            'email'=>$request->get('email'),
+            'phone'=>$request->get('phone')]);
+        return response()->json(['status'=>true])->setStatusCode(200,"Resource Updated");
+    }
+
 }
